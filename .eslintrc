@@ -1,0 +1,8 @@
+{
+  "extends": "./node_modules/eslint-config-rambler/.eslintrc",
+  "rules": {
+    "react/no-danger": 0,
+    "react/jsx-curly-spacing": 0,
+    "no-cond-assign": 0
+  }
+}

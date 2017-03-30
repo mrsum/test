@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+tmp/
+manifest.json
+*.log
+dist/
+testing/
+*.lock

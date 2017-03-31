@@ -4,7 +4,6 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { routerMiddleware, routerReducer } from 'react-router-redux'
 
 import thunk from 'redux-thunk'
-import logger from 'redux-logger'
 import promiseMiddleware from 'redux-promise-middleware'
 
 // get reducers object
@@ -27,8 +26,7 @@ export default createStore(
     applyMiddleware(
       routerMiddleware(),
       thunk,
-      promiseMiddleware(),
-      // logger
+      promiseMiddleware()
     )
   )
 )

@@ -1,8 +1,6 @@
-'use strict';
-
 // Depends
-var config = require('../global');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+let config = require('../global')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 /**
  * Production config
@@ -10,27 +8,42 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
  * @return {Object}       Object of proruction settings
  */
 module.exports = (ENV, ROOT) => {
-  let Config = config(ENV, ROOT);
-  let Plugins = Config.plugins;
-  let Loaders = Config.module.rules;
+  let Config = config(ENV, ROOT)
+  let Plugins = Config.plugins
+  let Rules = Config.module.rules
 
-  Loaders.push({
-    test: /\.styl$/,
-    loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1!postcss-loader!stylus-loader')
-  });
+  Rules.push(
+    {
+      test: /\.styl$/,
+      loader: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [
+          {
+            loader: 'css-loader',
+            query: {
+              modules: true,
+              importLoaders: 2,
+              localIdentName: '[name]__[local]--[hash:base64:10]'
+            }
+          },
+          'postcss-loader',
+          'stylus-loader'
+        ]
+      })
+    }
+  )
 
-  Plugins.push(new ExtractTextPlugin({ filename: 'style.[hash].css', disable: false, allChunks: true }))
+  Plugins.push(new ExtractTextPlugin({ filename: 'style.[hash].css', allChunks: true }))
 
   return {
     context: ROOT,
-    debug: false,
     devtool: 'source-map',
     output: {
       publicPath: ''
     },
     plugins: Plugins,
     module: {
-      rules: Loaders
+      rules: Rules
     }
-  };
-};
+  }
+}

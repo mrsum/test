@@ -7,16 +7,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 // ======================
-// Components
-// ======================
-import Button from '_app/components/Button'
-import SVG from '_app/components/SVG'
-
-
-// ======================
 // Actions
 // ======================
-import { getAll } from '_app/actions'
+import { getAll, remove } from '_app/actions/movie'
 
 const IndexPage = class IndexPage extends Component {
 
@@ -32,7 +25,8 @@ const IndexPage = class IndexPage extends Component {
     this.props.dispatch(getAll())
   }
 
-  renderNotFound() {
+
+  renderNotFoundMessage() {
     return(
       <div className={styles.notfound}>
         <h3>nothing to see right now :(</h3>
@@ -40,35 +34,51 @@ const IndexPage = class IndexPage extends Component {
     ) 
   }
 
-  renderUsers(movies) {
+  removeOne(id) {
+    const { dispatch } = this.props
+
+    // remove and fetch
+    dispatch(remove(id))
+      .then(() => {
+        dispatch(getAll())
+      })
+  } 
+
+  renderMoviesList(movies) {
+    
     return (
-      <ul>
-        {movies.map((user, key) => {
+      <div className={styles.list}>
+        {movies.map((movie, key) => {
           return (
-            <li key={key}>{user.firstname}</li>
+            <div key={key} className={styles.item}>
+              <div onClick={(e) => this.removeOne.bind(this)(movie.id)} className={styles.remove}>x</div>
+              <Link to={`/movie/${movie.id}`}>
+                <h1>{movie.title}</h1>
+                <p>{movie.description}</p>
+              </Link>
+              <img src={movie.cover} />
+            </div>
           )
         })}
-      </ul>
+      </div>
     )
   }
 
   render() {
-
     const { movies } = this.props
 
     return (
       <section className={styles.container}>
-        <h1>Movies database:</h1>
-        <div className={styles.buttonContainer}>
-          <Button text='add new one' href='movie/new' />
-        </div>
+        <section className={styles.header}>
+          <h1>Movies database</h1>
+          <Link to='/movie/new'>add</Link>
+        </section>
         
-        <div className={styles.list}>
-          { movies.length === 0 
-            ? this.renderNotFound() 
-            : this.renderUsers(movies)
-          }
-        </div>
+        { movies.length === 0 
+          ? this.renderNotFoundMessage() 
+          : this.renderMoviesList(movies)
+        }
+
       </section>
     )
   }

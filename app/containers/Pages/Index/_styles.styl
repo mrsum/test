@@ -1,17 +1,63 @@
 .container
   width 100%
   padding 50px
-  text-align center
+  
+.header
+  height 50px
+  border-bottom 1px solid #555c77
+  margin-bottom 20px
   h1
     color #fff
     text-transform uppercase
     margin-bottom 20px
+    float left
+  a
+    float right
+    color #fff
+    padding 10px 20px
+    text-decoration none
+    background-color #3a9888
+    text-transform uppercase
+    border-radius 3px
+    margin-top -12px
+    &:hover
+      opacity .7
 
 .list
   margin 0 auto
+  width 100%
+  display flex
+  flex-flow row wrap
+  
+.item
+  width 30%
+  margin 1%
+  min-width 200px
+  min-height 60px
+  padding 10px
+  border-radius 3px
+  background-color #545c77
+  position relative
+  h1
+    font-size 16px
+  p
+    font-size 12px
+  a
+    color #fff
+    text-decoration none
+  img
+    width 100%
+    margin-top 10px
+    border-radius 3px
+
+.remove
+  top 0
+  right 5px
+  position absolute
+  cursor pointer
+  &:hover
+    opacity .7
 
 .notfound
   margin 10px auto
 
-.buttonContainer
-  margin 30px 0

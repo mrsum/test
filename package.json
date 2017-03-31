@@ -13,7 +13,10 @@
     "react-redux": "5.0.3",
     "react-redux-form": "1.8.2",
     "react-router-dom": "4.0.0",
+    "react-router-redux": "^4.0.8",
     "redux": "3.6.0",
+    "redux-logger": "3.0.1",
+    "redux-promise-middleware": "4.2.0",
     "redux-thunk": "2.2.0"
   },
   "devDependencies": {
@@ -44,8 +47,7 @@
     "webpack": "2.3.2",
     "webpack-dev-middleware": "1.8.4",
     "webpack-dev-server": "2.4.2",
-    "webpack-hot-middleware": "2.13.2",
-    "webpack-svgstore-plugin": "4.0.0"
+    "webpack-hot-middleware": "2.13.2"
   },
   "repository": {
     "type": "git",

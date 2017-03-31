@@ -1,11 +1,18 @@
 
+// Depends
+import store from '_app/helpers/localstorage'
+
+// prepare storage instance worker
+const storage = store('movie_')
+
 /**
  * create new one
  * @param  {[type]} movie [description]
  * @return {[type]}       [description]
  */
 export const create = movie => ({
-  type: 'ADD_MOVIE', ...movie
+  type: 'ADD_MOVIE',
+  payload: storage.create(movie)
 })
 
 /**
@@ -13,8 +20,9 @@ export const create = movie => ({
  * @param  {[type]} movie [description]
  * @return {[type]}       [description]
  */
-export const read = movie => ({
-  type: 'GET_MOVIE', ...movie
+export const read = key => ({
+  type: 'GET_MOVIE',
+  payload: storage.read(key)
 })
 
 /**
@@ -22,8 +30,9 @@ export const read = movie => ({
  * @param  {[type]} movie [description]
  * @return {[type]}       [description]
  */
-export const remove = movie => ({
-  type: 'REMOVE_MOVIE', ...movie
+export const remove = id => ({
+  type: 'REMOVE_MOVIE', 
+  payload: storage.remove(id)
 })
 
 /**
@@ -31,8 +40,9 @@ export const remove = movie => ({
  * @param  {[type]} movie [description]
  * @return {[type]}       [description]
  */
-export const update = movie => ({
-  type: 'UPDATE_MOVIE', ...movie
+export const update = (id, movie) => ({
+  type: 'UPDATE_MOVIE',
+  payload: storage.update(id, movie)
 })
 
 /**
@@ -40,5 +50,6 @@ export const update = movie => ({
  * @return {[type]} [description]
  */
 export const getAll = () => ({
-  type: 'GET_ALL'
+  type: 'GET_ALL',
+  payload: storage.getAll()
 })

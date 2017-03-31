@@ -1,19 +1,34 @@
 
 // Depends
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { modelReducer, formReducer } from 'react-redux-form'
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { routerMiddleware, routerReducer } from 'react-router-redux'
+
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+import promiseMiddleware from 'redux-promise-middleware'
 
-// load models inttial states
-import initialMovieState from '_app/models/movie'
+// get reducers object
+import reducers from '_app/reducers'
 
-// prepare store
-const store = applyMiddleware(thunk)
-  (createStore)(
-    combineReducers({
-      movie: modelReducer('movie', initialMovieState),
-      movieForm: formReducer('movie', initialMovieState)
-    })
+// export store
+export default createStore(
+  combineReducers({
+    // put all system reducers
+    ...reducers,
+    // add routting matcher
+    routing: routerReducer
+  }), 
+
+  // initial state here if needed
+  {},
+
+  // compose middlewares
+  compose(
+    applyMiddleware(
+      routerMiddleware(),
+      thunk,
+      promiseMiddleware(),
+      // logger
+    )
   )
-
-export default store
+)

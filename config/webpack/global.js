@@ -1,12 +1,9 @@
-'use strict';
-
 // ======================
 // Depends
 // ======================
-const webpack           = require('webpack');
-const autoprefixer      = require('autoprefixer');
-const HtmlPlugin        = require('html-webpack-plugin');
-const SvgStore          = require('webpack-svgstore-plugin');
+const webpack           = require('webpack')
+const autoprefixer      = require('autoprefixer')
+const HtmlPlugin        = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 /**
@@ -17,7 +14,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = (ENV, ROOT) => {
 
   // define local variables
-  const dependencies  = Object.keys(require(`${ROOT}/package`).dependencies);
+  const dependencies  = Object.keys(require(`${ROOT}/package`).dependencies)
 
   // return objecy
   return {
@@ -89,14 +86,6 @@ module.exports = (ENV, ROOT) => {
 
     // load plugins
     plugins: [
-      new SvgStore({
-        // svgo options
-        svgoOptions: {
-          plugins: [
-            { removeTitle: true }
-          ]
-        }
-      }),
 
       new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendor.[hash].js' }),
       new webpack.LoaderOptionsPlugin({

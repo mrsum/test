@@ -1,49 +1,33 @@
 
 // Depends
-import store from '_app/helpers/localstorage'
+import { modelReducer, formReducer, modeled } from 'react-redux-form'
 
-// prepare storage instance worker
-const storage = store('movies_')
+// in case of new
+const initialState = {
+  title: '',
+  description: '',
+  cover: '',
+  year: '',
+  genre: '',
+  director: '',
+  duration: ''
+}
 
-/**
- * Movie reducer
- * @param  {Object} state  [description]
- * @param  {Object} action [description]
- * @return {[type]}        [description]
- */
-const movie = (state = {}, action = {}) => {
-
+// custom movies reducer
+const movies = (state = initialState, action) => {
   switch (action.type) {
 
-    // add new one
-    case 'ADD_MOVIE': return {
-      movie: storage.set(action)
-    }
+    case 'GET_ALL_FULFILLED':
+      return action.payload
 
-    // get
-    case 'GET_MOVIE': return {
-      movie: storage.get(action)
-    }
-
-    // remove
-    case 'REMOVE_MOVIE': return {
-      movie: storage.remove(action)
-    }
-
-    // update
-    case 'UPDATE_MOVIE': return {
-      movie: storage.set(action)
-    }
-
-    // get list of movies
-    case 'GET_ALL': return { 
-      movies: storage.all() 
-    }
-
-    // default behaviour
     default:
-      return { movies: [] }
+      return []
   }
 }
 
-export default movie
+// export movie reducer and movie form
+export default {
+  movies,
+  movie: modelReducer('movie', initialState),
+  movieForm: formReducer('movie', initialState),
+}
